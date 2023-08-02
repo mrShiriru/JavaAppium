@@ -1,4 +1,4 @@
-package lib;
+package ru.javaAppium.lib;
 
 import java.util.Arrays;
 

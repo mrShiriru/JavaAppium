@@ -1,9 +1,9 @@
-package androidTests;
+package ru.javaAppium.androidTests;
 
-import lib.CoreTestCase;
+import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Test;
 
-import static lib.ui.AnyPage.FIRST_ARTICLE;
+import static ru.javaAppium.pages.AnyPage.FIRST_ARTICLE;
 
 public class ExamplesTest extends CoreTestCase {
 

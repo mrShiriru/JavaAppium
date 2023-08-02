@@ -1,15 +1,13 @@
-package lib.ui;
+package ru.javaAppium.pages;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.panels.BottomPanel;
-import lib.ui.panels.TopPanel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import ru.javaAppium.panels.BottomPanel;
+import ru.javaAppium.panels.TopPanel;
 
 import java.util.List;
 
-import static lib.CoreTestCase.DEFAULT_WAIT_TIME;
-import static lib.CoreTestCase.SHORT_WAIT_TIME;
 
 public class ArticlePage extends AnyPage {
 
@@ -44,7 +42,7 @@ public class ArticlePage extends AnyPage {
         waitElementPresent(
                 FRAGMENT_PAGE_COORDINATOR,
                 "Popup with info not found",
-                DEFAULT_WAIT_TIME
+                15
         );
     }
 
@@ -52,14 +50,14 @@ public class ArticlePage extends AnyPage {
 
         waitElementPresent(getArticleTitleLocator(titleName),
                 String.format("Cannot find title '%s' in the current article", titleName),
-                DEFAULT_WAIT_TIME);
+                15);
     }
 
     public String getTitle() {
         WebElement actualArticle =  waitElementPresent(
                 ARTICLE_TITLE,
                 "Article title not found",
-                SHORT_WAIT_TIME);
+                5);
 
         return actualArticle.getAttribute("name");
     }

@@ -1,4 +1,4 @@
-package lib.ui.interfaces;
+package ru.javaAppium.interfaces;
 
 import org.openqa.selenium.WebElement;
 

@@ -1,16 +1,15 @@
-package lib.ui;
+package ru.javaAppium.pages;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.interfaces.Article;
-import lib.ui.panels.TopPanel;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
+import ru.javaAppium.interfaces.Article;
+import ru.javaAppium.panels.TopPanel;
 
 import java.util.List;
+import java.util.Objects;
 
-import static lib.CoreTestCase.DEFAULT_WAIT_TIME;
-import static lib.CoreTestCase.SHORT_WAIT_TIME;
 
 public class SearchPage  extends AnyPage implements Article {
 
@@ -51,15 +50,15 @@ public class SearchPage  extends AnyPage implements Article {
     /* TEMPLATES METHODS */
 
     public void clickSearchInput(){
-        waitAndClick(SEARCH_INPUT_ELEMENT, "Cannot find and click search input element", SHORT_WAIT_TIME);
+        waitAndClick(SEARCH_INPUT_ELEMENT, "Cannot find and click search input element", 5);
     }
 
     public void typeIntoSearchInput(String text){
-        waitAndSendKeys(SEARCH_INPUT_ELEMENT, text, "Cannot find and type into search input", SHORT_WAIT_TIME);
+        waitAndSendKeys(SEARCH_INPUT_ELEMENT, text, "Cannot find and type into search input", 5);
     }
 
     public void waitForSearchResult(String description){
-        waitElementPresent(getXpathResultSearchArticle(description),"Current article not found", DEFAULT_WAIT_TIME);
+        waitElementPresent(getXpathResultSearchArticle(description),"Current article not found", 5);
     }
 
     /**
@@ -73,31 +72,33 @@ public class SearchPage  extends AnyPage implements Article {
         waitElementPresent(
                 getXpathResultSearchArticle(title, description),
                 String.format("Current article with title= '%s' and description = '%s' not found", title, description),
-                DEFAULT_WAIT_TIME);
+                15);
     }
 
     public void waitAndClickSearchCloseButton(){
         waitAndClick(
-                SEARCH_CLOSE_BUTTON, "Cannot find and click X to cancel search", SHORT_WAIT_TIME);
+                SEARCH_CLOSE_BUTTON, "Cannot find and click X to cancel search", 5);
     }
 
     public void waitForCancelButtonToDisappear(){
-        waitElementNotPresent(SEARCH_CLOSE_BUTTON, "X is still present on the page", SHORT_WAIT_TIME);
+        waitElementNotPresent(SEARCH_CLOSE_BUTTON, "X is still present on the page", 5);
     }
 
     public void checkArticlesPresentInSearchList() {
         List<WebElement> articles =  waitElementsPresent(
                 ARTICLES_IN_SEARCH_LIST,
                 "Cannot find articles in the search list",
-                DEFAULT_WAIT_TIME);
-        Assertions.assertNotNull(articles, "No articles found in search list");
+                15);
+        if (Objects.isNull(articles)){
+            throw new NotFoundException("No articles found in search list");
+        }
     }
 
     public void waitForArticlesToDisappear(){
         waitElementsNotPresent(
                 findElements(ARTICLES_IN_SEARCH_LIST),
                 "Articles are still present in search list",
-                SHORT_WAIT_TIME);
+                5);
     }
 
     public void checkTextInEachSearchResult(String text){
@@ -106,14 +107,16 @@ public class SearchPage  extends AnyPage implements Article {
         for (WebElement article : articles){
             String actualTitle = getTitle(article);
 
-            Assertions.assertTrue(actualTitle.contains(text), "Text is not contains in search title");
+            if (!actualTitle.contains(text)){
+                throw new NotFoundException("ext is not contains in search title");
+            }
         }
     }
 
     public WebElement getArticleFromList(int numberOfArticle) {
         List<WebElement> articles =  waitElementsPresent(ARTICLES_IN_SEARCH_LIST,
                 "No articles found in the search list",
-                DEFAULT_WAIT_TIME);
+                15);
 
         return articles.get(numberOfArticle);
     }

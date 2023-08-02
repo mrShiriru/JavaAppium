@@ -1,14 +1,11 @@
-package lib.ui;
+package ru.javaAppium.pages;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.interfaces.Article;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import ru.javaAppium.interfaces.Article;
 
 import java.util.List;
-
-import static lib.CoreTestCase.DEFAULT_WAIT_TIME;
-import static lib.CoreTestCase.SHORT_WAIT_TIME;
 
 public class GroupPage extends AnyPage implements Article {
 
@@ -24,7 +21,7 @@ public class GroupPage extends AnyPage implements Article {
         return  waitElementsPresent(
                 ARTICLE_LIST_TITLE,
                 "Cannot find articles in group list",
-                DEFAULT_WAIT_TIME
+                5
         );
     }
 
@@ -35,7 +32,7 @@ public class GroupPage extends AnyPage implements Article {
         waitElementsPresent(
                 POPUP_INFO,
                 "Popup with info not found",
-                SHORT_WAIT_TIME
+                5
         );
     }
 

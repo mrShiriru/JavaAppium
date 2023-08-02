@@ -1,17 +1,12 @@
-package lib.ui;
+package ru.javaAppium.pages;
 
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
-
-import static lib.CoreTestCase.SHORT_WAIT_TIME;
 
 public abstract class AnyPage {
     protected AppiumDriver driver;
@@ -29,13 +24,6 @@ public abstract class AnyPage {
                 .withMessage(errorMsg + "\n")
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
     }
-
-    protected WebElement waitElementVisibility(By locator, String errorMessage) {
-        return new WebDriverWait(driver, SHORT_WAIT_TIME)
-                .withMessage(errorMessage)
-                .until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
 
     public List<WebElement> waitElementsPresent(By locator, String errorMsg, long timeoutInSeconds){
         return new WebDriverWait(driver, timeoutInSeconds)
@@ -59,6 +47,43 @@ public abstract class AnyPage {
         WebElement element = waitElementPresent(locator, errorMsg, timeoutInSeconds);
         element.click();
     }
+
+    //
+
+    public void waitAndClick(String locator, String errorMsg, long timeoutInSeconds){
+        WebElement element = waitElementPresent(locator, errorMsg, timeoutInSeconds);
+        element.click();
+    }
+
+    public WebElement waitElementPresent(String locator, String errorMsg, long timeoutInSeconds){
+        By by = getLocatorByString(locator);
+        return new WebDriverWait(driver, timeoutInSeconds)
+                .withMessage(errorMsg + "\n")
+                .until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    protected WebElement waitElementVisibility(String locator, String errorMessage) {
+        By by = getLocatorByString(locator);
+        return new WebDriverWait(driver, 5)
+                .withMessage(errorMessage)
+                .until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    private By getLocatorByString(String locatorWithBy){
+        String[] parts = locatorWithBy.split(":");
+        String by = parts[0];
+        String locator = parts[1];
+        switch (by){
+            case "xpath":
+                return By.xpath(locator);
+            case "id":
+                return By.id(locator);
+            default:
+                throw new IllegalArgumentException("by not found " + by);
+        }
+    }
+
+    //
 
     public void waitAndSendKeys(By by, String value, String errorMsg, long timeoutInSeconds){
         WebElement element = waitElementPresent(by, errorMsg, timeoutInSeconds);
@@ -99,18 +124,5 @@ public abstract class AnyPage {
 //                .perform();
     }
 
-    private By getLocatorByString(String locatorWithBy){
-        String[] parts = locatorWithBy.split(":");
-        String by = parts[0];
-        String locator = parts[1];
-        switch (by){
-            case "xpath":
-                return By.xpath(locator);
-            case "id":
-                return By.id(locator);
-            default:
-                throw new IllegalArgumentException("by not found " + by);
-        }
-    }
 
 }

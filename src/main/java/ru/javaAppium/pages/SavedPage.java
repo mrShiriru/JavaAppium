@@ -1,10 +1,8 @@
-package lib.ui;
+package ru.javaAppium.pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-import static lib.CoreTestCase.SHORT_WAIT_TIME;
 
 public class SavedPage extends AnyPage {
     public SavedPage(AppiumDriver driver) {
@@ -18,6 +16,6 @@ public class SavedPage extends AnyPage {
     public void clickSavedGroup(){
         waitAndClick(SAVED_GROUP,
                 "Can't open Saved group",
-                SHORT_WAIT_TIME);
+                5);
     }
 }

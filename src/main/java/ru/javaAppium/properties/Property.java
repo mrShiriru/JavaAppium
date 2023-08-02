@@ -1,4 +1,4 @@
-package properties;
+package ru.javaAppium.properties;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,14 +1,14 @@
-package androidTests;
+package ru.javaAppium.androidTests;
 
-import lib.CoreTestCase;
+import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static lib.ui.AnyPage.FIRST_ARTICLE;
-import static lib.ui.AnyPage.SECOND_ARTICLE;
+import static ru.javaAppium.pages.AnyPage.FIRST_ARTICLE;
+import static ru.javaAppium.pages.AnyPage.SECOND_ARTICLE;
 
 public class Ex5Test extends CoreTestCase {
 

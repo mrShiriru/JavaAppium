@@ -1,6 +1,6 @@
-package iosTests;
+package ru.javaAppium.iosTests;
 
-import lib.CoreTestCase;
+import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Test;
 
 public class ExamplesTest extends CoreTestCase {

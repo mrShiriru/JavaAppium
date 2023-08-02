@@ -1,6 +1,6 @@
-package androidTests;
+package ru.javaAppium.androidTests;
 
-import lib.CoreTestCase;
+import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

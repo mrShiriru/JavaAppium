@@ -1,22 +1,22 @@
-package lib;
+package ru.javaAppium.lib;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import lib.ui.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import ru.javaAppium.pages.*;
 
 import java.net.URL;
-import java.util.Arrays;
 
-import static properties.Property.getConfigPropertyVariable;
+import static ru.javaAppium.properties.Property.getConfigPropertyVariable;
 
 
 public class CoreTestCase {
 
-    protected AppiumDriver driver;
+    protected AppiumDriver<WebElement> driver;
 
     public static final long
             DEFAULT_WAIT_TIME = 15,
@@ -34,11 +34,11 @@ public class CoreTestCase {
     public void setUp() throws Exception
     {
         driver = getDriverByEnv();
-        loadingPage();
+        loadingPages();
         mainPage.skipOnboarding();
     }
 
-    private AppiumDriver getDriverByEnv() throws Exception {
+    private AppiumDriver<WebElement> getDriverByEnv() throws Exception {
         String platformValue = getConfigPropertyVariable("platformName");
         String url = getConfigPropertyVariable("platformURL");
         PlatformName platformName = PlatformName.findEnum(platformValue);
@@ -48,13 +48,13 @@ public class CoreTestCase {
                 DesiredCapabilities androidCaps = new DesiredCapabilities();
                 androidCaps.setCapability("deviceOrientation", "portrait");
                 androidCaps.setCapability("platformName", "android");
-                androidCaps.setCapability("deviceName", "AndroidTestDevice");
-                androidCaps.setCapability("platformVersion", "14");
-                androidCaps.setCapability("automationName", "UiAutomator2");
+                androidCaps.setCapability("deviceName", "and80");
+                androidCaps.setCapability("platformVersion", "8.1.0");
+                androidCaps.setCapability("automationName", "Appium");
                 androidCaps.setCapability("appPackage", "org.wikipedia");
                 androidCaps.setCapability("appActivity", ".main.MainActivity");
-                androidCaps.setCapability("app", "/Users/user/Desktop/java/appiumAuto/apks/wikipedia.apk");
-                return new AndroidDriver(new URL(url+"/wd/hub"), androidCaps);
+                androidCaps.setCapability("app", "/Users/user/Desktop/javaAppium/JavaAppium/src/main/resources/apks/org.wikipedia.apk");
+                return new AndroidDriver<>(new URL(url+"/wd/hub"), androidCaps);
             case IOS_PLATFORM_NAME:
                 DesiredCapabilities iosCaps = new DesiredCapabilities();
                 iosCaps.setCapability("platformName", "iOS");
@@ -62,14 +62,13 @@ public class CoreTestCase {
                 iosCaps.setCapability("platformVersion", "14.3");
                 iosCaps.setCapability("automationName", "XCUITest");
                 iosCaps.setCapability("app", "/Users/user/Desktop/javaAppium/JavaAppium/src/main/resources/apks/Wikipedia.app");
-                driver =  new IOSDriver(new URL(url), iosCaps);
-                return driver;
+                return new IOSDriver<>(new URL(url), iosCaps);
             default:
                 throw new Exception("unknown platform name " + platformName);
         }
     }
 
-    private void loadingPage(){
+    private void loadingPages(){
         searchPage = new SearchPage(driver);
         articlePage = new ArticlePage(driver);
         savedPage = new SavedPage(driver);
@@ -81,6 +80,5 @@ public class CoreTestCase {
     public void tearDown(){
         driver.quit();
     }
-
 
 }
