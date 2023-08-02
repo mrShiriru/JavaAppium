@@ -1,10 +1,10 @@
-package ru.javaAppium.lib;
+package ru.javaAppium.properties;
 
 import java.util.Arrays;
 
 public enum PlatformName{
-    ANDROID_PLATFORM_NAME("android"),
-    IOS_PLATFORM_NAME("ios");
+    PLATFORM_ANDROID("android"),
+    PLATFORM_IOS("ios");
 
     public String getPlatformName() {
         return platformName;

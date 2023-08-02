@@ -30,7 +30,7 @@ public class Ex2Test extends CoreTestCase {
     }
 
     private void assertElementHasText(By locator, String expectedText, String errorMessage){
-        WebElement element = mainPage.waitElementPresent(locator,ERROR_MESSAGE,DEFAULT_WAIT_TIME);
+        WebElement element = mainPage.waitElementPresent(locator,ERROR_MESSAGE,15);
         String actualText = element.getAttribute("text");
 
         Assertions.assertEquals(errorMessage, expectedText, actualText);
