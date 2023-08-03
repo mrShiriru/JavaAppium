@@ -7,13 +7,13 @@ import ru.javaAppium.interfaces.Article;
 
 import java.util.List;
 
-public class GroupPage extends AnyPage implements Article {
+public abstract class GroupPage extends AnyPage implements Article {
 
-    private static final By ARTICLE_LIST_TITLE = By.xpath(
-            "//android.widget.TextView[@resource-id='org.wikipedia:id/page_list_item_title']"),
-            POPUP_INFO = By.id("org.wikipedia:id/snackbar_text");
+    protected static By
+            ARTICLE_LIST_TITLE,
+            POPUP_INFO;
 
-    public GroupPage(AppiumDriver driver) {
+    public GroupPage(AppiumDriver<WebElement> driver) {
         super(driver);
     }
 

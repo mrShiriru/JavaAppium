@@ -9,12 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public abstract class AnyPage {
-    protected AppiumDriver driver;
+    protected AppiumDriver<WebElement> driver;
 
     public static final int FIRST_ARTICLE = 0;
     public static final int SECOND_ARTICLE = 1;
 
-    public AnyPage(AppiumDriver driver){
+    public AnyPage(AppiumDriver<WebElement> driver){
         this.driver= driver;
     }
 
@@ -62,9 +62,9 @@ public abstract class AnyPage {
                 .until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    protected WebElement waitElementVisibility(String locator, String errorMessage) {
+    protected void waitElementVisibility(String locator, String errorMessage) {
         By by = getLocatorByString(locator);
-        return new WebDriverWait(driver, 5)
+        new WebDriverWait(driver, 5)
                 .withMessage(errorMessage)
                 .until(ExpectedConditions.visibilityOfElementLocated(by));
     }

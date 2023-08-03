@@ -9,18 +9,17 @@ import ru.javaAppium.panels.TopPanel;
 import java.util.List;
 
 
-public class ArticlePage extends AnyPage {
+public abstract class ArticlePage extends AnyPage {
 
     TopPanel topPanel;
     BottomPanel bottomPanel;
 
-    private static final By
-            FRAGMENT_PAGE_COORDINATOR =  By.id("org.wikipedia:id/fragment_page_coordinator"),
-            ARTICLE_TITLE = By.xpath("//android.view.View[@resource-id='pcs-edit-section-title-description']" +
-            "/preceding-sibling::android.view.View");
-    private static final String TITLE_TPL =  "//android.webkit.WebView[contains(@content-desc,'{TITLE}')]";
+    protected static By
+            FRAGMENT_PAGE_COORDINATOR,
+            ARTICLE_TITLE;
+    protected static String TITLE_TPL;
 
-    public ArticlePage(AppiumDriver driver) {
+    public ArticlePage(AppiumDriver<WebElement> driver) {
         super(driver);
         topPanel = new TopPanel(driver);
         bottomPanel = new BottomPanel(driver);

@@ -1,4 +1,4 @@
-package ru.javaAppium.factories;
+package ru.javaAppium.pages.factories;
 
 import io.appium.java_client.AppiumDriver;
 

@@ -4,7 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebElement;
-import ru.javaAppium.factories.MainPageFactory;
+import ru.javaAppium.pages.factories.*;
 import ru.javaAppium.pages.*;
 import ru.javaAppium.properties.Platform;
 
@@ -31,12 +31,11 @@ public class CoreTestCase {
     }
 
     private void loadingPages(){
-        searchPage = new SearchPage(driver);
-        articlePage = new ArticlePage(driver);
-        savedPage = new SavedPage(driver);
-        groupPage = new GroupPage(driver);
+        searchPage = SearchPageFactory.get(driver);
+        articlePage = ArticlePageFactory.get(driver);
+        savedPage = SavedPageFactory.get(driver);
+        groupPage = GroupPageFactory.get(driver);
         mainPage = MainPageFactory.get(driver);
-       // mainPage = new MainPage(driver);
     }
 
     @AfterEach
