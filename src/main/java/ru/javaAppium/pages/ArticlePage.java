@@ -4,7 +4,9 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import ru.javaAppium.panels.BottomPanel;
+import ru.javaAppium.panels.BottomPanelFactory;
 import ru.javaAppium.panels.TopPanel;
+import ru.javaAppium.panels.TopPanelFactory;
 
 import java.util.List;
 
@@ -21,8 +23,8 @@ public abstract class ArticlePage extends AnyPage {
 
     public ArticlePage(AppiumDriver<WebElement> driver) {
         super(driver);
-        topPanel = new TopPanel(driver);
-        bottomPanel = new BottomPanel(driver);
+        topPanel = TopPanelFactory.get(driver);
+        bottomPanel = BottomPanelFactory.get(driver);
     }
 
     public TopPanel getTopPanel(){
@@ -46,11 +48,21 @@ public abstract class ArticlePage extends AnyPage {
     }
 
     public void checkTitlePresentInArticle(String titleName){
-
         waitElementPresent(getArticleTitleLocator(titleName),
                 String.format("Cannot find title '%s' in the current article", titleName),
                 15);
+        checkPopupHelper();
     }
+
+    protected void checkPopupHelper(){
+        By locator = By.xpath("//*[contains(@name, 'Tap to go back')]");
+
+        if (driver.findElements(locator).size() >0){
+            waitElementNotPresent(locator,"Popup 'Tap to go back' still present on the page",15);
+        }
+    }
+
+    public abstract String getDescription();
 
     public String getTitle() {
         WebElement actualArticle =  waitElementPresent(

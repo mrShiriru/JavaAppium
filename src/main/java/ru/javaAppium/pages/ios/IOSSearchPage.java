@@ -13,14 +13,22 @@ public class IOSSearchPage extends SearchPage {
 
     static{
         SEARCH_INPUT_ELEMENT = By.xpath("//*[contains(@name,'Search Wikipedia')]");
-        SEARCH_CLOSE_BUTTON = By.id("org.wikipedia:id/search_close_btn");
+        SEARCH_CLEAR_TEXT_BUTTON = By.xpath("//XCUIElementTypeButton[@name='Clear text']");
         ARTICLES_IN_SEARCH_LIST = By.xpath(
-                "//*[@resource-id='org.wikipedia:id/search_results_list']//android.view.ViewGroup");
-        PAGE_LIST_ITEM_TITLE = By.xpath(".//*[@resource-id='org.wikipedia:id/page_list_item_title']");
+                "//XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView//XCUIElementTypeCell");
+        PAGE_LIST_ITEM_TITLE = By.xpath(".//XCUIElementTypeStaticText[1]");
 
         SEARCH_RESULT_BY_SUBSTRING_TPL = "XCUIElementTypeStaticText[contains(@name,'{DESCRIPTION}')]";
-        SEARCH_BY_TITLE_AND_DESCRIPTION_TPL = "//*[@resource-id ='org.wikipedia:id/search_results_list']" +
-                "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='{TITLE}']/following-sibling::" +
+        SEARCH_BY_TITLE_AND_DESCRIPTION_TPL = ARTICLES_IN_SEARCH_LIST +
+                "//XCUIElementTypeStaticText[contains(@name,'{TITLE}')]/following-sibling::" +
                 SEARCH_RESULT_BY_SUBSTRING_TPL;
     }
+
+    By CANCEL_BUTTON = By.xpath("//XCUIElementTypeStaticText[@name='Cancel']");
+
+    @Override
+    protected void clickCancelButton(){
+        waitAndClick(CANCEL_BUTTON, "Can not click cancel button", 5);
+    }
+
 }

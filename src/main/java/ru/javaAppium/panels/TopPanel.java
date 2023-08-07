@@ -1,16 +1,19 @@
 package ru.javaAppium.panels;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebElement;
 import ru.javaAppium.pages.AnyPage;
 import org.openqa.selenium.By;
+import ru.javaAppium.properties.Platform;
 
-public class TopPanel extends AnyPage {
+public abstract class TopPanel extends AnyPage {
 
-    public TopPanel(AppiumDriver driver) {
+    public TopPanel(AppiumDriver<WebElement> driver) {
         super(driver);
     }
 
-    public static final By NAVIGATE_UP = By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']");
+    public static By NAVIGATE_UP;
+
 
     public void clickNavigateUpButton(){
         waitAndClick(

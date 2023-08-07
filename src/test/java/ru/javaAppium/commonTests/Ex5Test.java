@@ -1,9 +1,10 @@
-package ru.javaAppium.androidTests;
+package ru.javaAppium.commonTests;
 
 import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
+import ru.javaAppium.properties.Platform;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Ex5Test extends CoreTestCase {
         searchPage.typeIntoSearchInput(searchValue);
         saveCurrentArticle(FIRST_ARTICLE);
         saveCurrentArticle(SECOND_ARTICLE);
-        searchPage.getTopPanel().clickNavigateUpButton();
+        searchPage.returnOnTheMainPage();
         mainPage.getBottomPanel().clickSavedButton();
         savedPage.clickSavedGroup();
 
@@ -37,10 +38,23 @@ public class Ex5Test extends CoreTestCase {
         List<WebElement> items2 =  groupPage.getArticlesList();
         Assertions.assertTrue(items.size() > items2.size(), "The first article hasn't been removed");
 
-        String expectedTitle = groupPage.saveTitleAndOpenArticle(FIRST_ARTICLE);
+        if(Platform.getInstance().isAndroid()){
+            verifyTitleOfArticle();
+        } else {
+            verifyDescriptionOfArticle();
+        }
+    }
 
+    private void verifyDescriptionOfArticle() {
+        String expectedDescription = groupPage.saveDescriptionAndOpenArticle(FIRST_ARTICLE);
+        String actualDescription = articlePage.getDescription();
+        Assertions.assertEquals(expectedDescription,actualDescription,ERROR_MESSAGE);
+    }
+
+    private void verifyTitleOfArticle() {
+        String expectedTitle = groupPage.saveTitleAndOpenArticle(FIRST_ARTICLE);
         String actualTitle = articlePage.getTitle();
-        Assertions.assertEquals(ERROR_MESSAGE,expectedTitle,actualTitle);
+        Assertions.assertEquals(expectedTitle,actualTitle, ERROR_MESSAGE);
     }
 
     private void saveCurrentArticle(int articleNumber){

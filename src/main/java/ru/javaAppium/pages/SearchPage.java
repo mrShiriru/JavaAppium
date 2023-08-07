@@ -6,6 +6,8 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 import ru.javaAppium.interfaces.Article;
 import ru.javaAppium.panels.TopPanel;
+import ru.javaAppium.panels.TopPanelFactory;
+import ru.javaAppium.properties.Platform;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +19,7 @@ public abstract class SearchPage  extends AnyPage implements Article {
 
     protected static By
             SEARCH_INPUT_ELEMENT,
-            SEARCH_CLOSE_BUTTON ,
+            SEARCH_CLEAR_TEXT_BUTTON,
             ARTICLES_IN_SEARCH_LIST,
             PAGE_LIST_ITEM_TITLE;
 
@@ -27,12 +29,19 @@ public abstract class SearchPage  extends AnyPage implements Article {
 
     public SearchPage(AppiumDriver<WebElement> driver) {
         super(driver);
-        topPanel = new TopPanel(driver);
+        topPanel = TopPanelFactory.get(driver);
     }
 
-    public TopPanel getTopPanel(){
-        return topPanel;
+    public void returnOnTheMainPage(){
+        if(Platform.getInstance().isAndroid()){
+            topPanel.clickNavigateUpButton();
+        }else{
+            clickCancelButton();
+        }
+
     }
+
+    protected void clickCancelButton(){}
 
     /* TEMPLATES METHODS */
     private static By getXpathResultSearchArticle(String description){
@@ -74,11 +83,11 @@ public abstract class SearchPage  extends AnyPage implements Article {
 
     public void waitAndClickSearchCloseButton(){
         waitAndClick(
-                SEARCH_CLOSE_BUTTON, "Cannot find and click X to cancel search", 5);
+                SEARCH_CLEAR_TEXT_BUTTON, "Cannot find and click X to cancel search", 5);
     }
 
     public void waitForCancelButtonToDisappear(){
-        waitElementNotPresent(SEARCH_CLOSE_BUTTON, "X is still present on the page", 5);
+        waitElementNotPresent(SEARCH_CLEAR_TEXT_BUTTON, "X is still present on the page", 5);
     }
 
     public void checkArticlesPresentInSearchList() {
@@ -118,7 +127,14 @@ public abstract class SearchPage  extends AnyPage implements Article {
         return articles.get(numberOfArticle);
     }
 
+    @Override
     public String getTitle(WebElement article) {
         return article.findElement(PAGE_LIST_ITEM_TITLE).getText();
     }
+
+    @Override
+    public String getDescription(WebElement article) {
+        return null;
+    }
+
 }

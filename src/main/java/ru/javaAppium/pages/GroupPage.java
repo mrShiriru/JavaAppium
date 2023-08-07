@@ -29,19 +29,20 @@ public abstract class GroupPage extends AnyPage implements Article {
         List<WebElement> articleList = getArticlesList();
         swipeElementToLeft(articleList.get(ArticleNumber));
 
-        waitElementsPresent(
-                POPUP_INFO,
-                "Popup with info not found",
-                5
-        );
+//        waitElementsPresent(
+//                POPUP_INFO,
+//                "Popup with info not found",
+//                5
+//        );
     }
 
-    public WebElement getArticleFromList(int numberOfArticle) {
-        List<WebElement> articles = getArticlesList();
-        return articles.get(numberOfArticle);
-    }
-
+    @Override
     public String getTitle(WebElement article) {
+        return article.getText();
+    }
+
+    @Override
+    public String getDescription(WebElement article) {
         return article.getText();
     }
 }

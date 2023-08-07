@@ -10,6 +10,11 @@ public class AndroidArticlePage extends ArticlePage {
         super(driver);
     }
 
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
     static {
         FRAGMENT_PAGE_COORDINATOR =  By.id("org.wikipedia:id/fragment_page_coordinator");
         ARTICLE_TITLE = By.xpath("//android.view.View[@resource-id='pcs-edit-section-title-description']" +

@@ -11,7 +11,6 @@ public class IOSSavedPage extends SavedPage {
     }
 
     static {
-        SAVED_GROUP = By.xpath("//android.view.ViewGroup" +
-                "//android.widget.TextView[@resource-id='org.wikipedia:id/item_title' and @text='Saved']");
+        SAVED_GROUP = By.xpath("//XCUIElementTypeButton[@name='Saved']");
     }
 }

@@ -12,9 +12,20 @@ public class IOSArticlePage extends ArticlePage {
     }
 
     static {
-        FRAGMENT_PAGE_COORDINATOR =  By.id("org.wikipedia:id/fragment_page_coordinator");
-        ARTICLE_TITLE = By.xpath("//android.view.View[@resource-id='pcs-edit-section-title-description']" +
-                "/preceding-sibling::android.view.View");
-        TITLE_TPL =  "//android.webkit.WebView[contains(@content-desc,'{TITLE}')]";
+        FRAGMENT_PAGE_COORDINATOR =  By.xpath("//XCUIElementTypeStaticText[contains(@name,'to a reading list?')]");
+        TITLE_TPL =  "(//XCUIElementTypeStaticText[@name='{TITLE}'])[1]";
     }
+    static final By ELEMENT_DESCRIPTION = By.xpath("//XCUIElementTypeOther[@name='banner']/XCUIElementTypeOther[2]/XCUIElementTypeStaticText");
+
+
+    @Override
+    public String getDescription() {
+        WebElement actualArticle =  waitElementPresent(
+                ELEMENT_DESCRIPTION,
+                "Article title not found",
+                5);
+
+        return actualArticle.getAttribute("name");
+    }
+
 }

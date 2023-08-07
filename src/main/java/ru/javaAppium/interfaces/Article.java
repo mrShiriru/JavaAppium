@@ -11,8 +11,18 @@ public interface Article {
         return expectedTitle;
     }
 
+    default String saveDescriptionAndOpenArticle(int numberOfArticle) {
+        WebElement article = getArticleFromList(numberOfArticle);
+        String expectedDescription = getDescription(article);
+        article.click();
+        return expectedDescription;
+    }
+
     WebElement getArticleFromList(int numberOfArticle);
+
     String getTitle(WebElement article);
+
+    String getDescription(WebElement article);
 
 
 }
