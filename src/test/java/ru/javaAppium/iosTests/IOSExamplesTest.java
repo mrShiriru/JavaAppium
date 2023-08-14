@@ -3,7 +3,7 @@ package ru.javaAppium.iosTests;
 import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Test;
 
-public class ExamplesTest extends CoreTestCase {
+public class IOSExamplesTest extends CoreTestCase {
 
     @Test
     public void testCheckSearchInput(){

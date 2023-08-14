@@ -31,7 +31,7 @@ public abstract class MainPage extends AnyPage {
         waitForFreeEncyclopedia();
         waitAndClick(
                 SKIP_BUTTON,
-                "Cannot click Skip button",
+                "Cannot click Skip2222 button",
                 5);
     }
 

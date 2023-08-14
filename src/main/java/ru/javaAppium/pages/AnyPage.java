@@ -78,7 +78,7 @@ public abstract class AnyPage {
     }
 
     private By getLocatorByString(String locatorWithBy){
-        String[] parts = locatorWithBy.split(":");
+        String[] parts = locatorWithBy.split(":=");
         String by = parts[0];
         String locator = parts[1];
         switch (by){

@@ -10,7 +10,7 @@ public class AndroidMainPage extends MainPage {
     }
 
     static {
-        SKIP_BUTTON = "id:org.wikipedia:id/fragment_onboarding_skip_button";
-        FREE_ENC = "id:The free encyclopedia";
+        SKIP_BUTTON = "id:=org.wikipedia:id/fragment_onboarding_skip_button";
+        FREE_ENC = "id:=org.wikipedia:id/primaryTextView";
     }
 }

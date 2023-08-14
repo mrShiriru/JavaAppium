@@ -11,7 +11,7 @@ public class AndroidSearchPage extends SearchPage {
     }
 
     static{
-                SEARCH_INPUT_ELEMENT = By.xpath("//*[contains(@name,'Search Wikipedia')]");
+                SEARCH_INPUT_ELEMENT = By.xpath("//*[contains(@text,'Search Wikipedia')]");
                 SEARCH_CLEAR_TEXT_BUTTON = By.id("org.wikipedia:id/search_close_btn");
                 ARTICLES_IN_SEARCH_LIST = By.xpath(
                         "//*[@resource-id='org.wikipedia:id/search_results_list']//android.view.ViewGroup");

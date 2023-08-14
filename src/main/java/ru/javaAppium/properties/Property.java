@@ -1,6 +1,7 @@
 package ru.javaAppium.properties;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,6 +9,18 @@ import java.util.Objects;
 
 @Slf4j
 public class Property {
+
+
+    public static String getCustomProperty(String propertyName){
+        String propertyValue  = System.getProperty(propertyName);
+        log.debug("Getting value from jenkins: value {} = {}",propertyName, propertyValue);
+        if ( StringUtils.isEmpty(propertyValue)) {
+            propertyValue = getConfigPropertyVariable(propertyName);
+        }
+
+        return propertyValue;
+    }
+
 
     public static String getConfigPropertyVariable(String variableName) {
 

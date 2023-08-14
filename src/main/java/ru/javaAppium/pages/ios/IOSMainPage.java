@@ -10,7 +10,7 @@ public class IOSMainPage extends MainPage {
     }
 
     static {
-            SKIP_BUTTON = "xpath://XCUIElementTypeButton[@name='Skip']";
-            FREE_ENC = "id:The free encyclopedia";
+            SKIP_BUTTON = "xpath:=//XCUIElementTypeButton[@name='Skip']";
+            FREE_ENC = "id:=The free encyclopedia";
     }
 }

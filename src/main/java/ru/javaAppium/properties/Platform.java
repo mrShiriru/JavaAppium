@@ -10,6 +10,7 @@ import java.net.URL;
 
 import static ru.javaAppium.properties.PlatformName.PLATFORM_ANDROID;
 import static ru.javaAppium.properties.Property.getConfigPropertyVariable;
+import static ru.javaAppium.properties.Property.getCustomProperty;
 
 public class Platform {
 
@@ -33,7 +34,7 @@ public class Platform {
 
         switch (platformName) {
             case PLATFORM_ANDROID:
-                return new AndroidDriver<>(new URL(getPlatformURL()+"/wd/hub"), getAndroidDesiredCapabilities());
+                return new AndroidDriver<>(new URL(getPlatformURL()), getAndroidDesiredCapabilities());
             case PLATFORM_IOS:
                 return new IOSDriver<>(new URL(getPlatformURL()), getIOSDesiredCapabilities());
             default:
@@ -42,21 +43,21 @@ public class Platform {
     }
 
     private String getPlatformURL(){
-        return getConfigPropertyVariable("platformURL");
+        return getCustomProperty("platformURL");
     }
 
     private PlatformName getEnumPlatformName(){
-        String platformValue = getConfigPropertyVariable("platformName");
+        String platformValue = getCustomProperty("platformName");
         return PlatformName.findEnum(platformValue);
     }
 
     private DesiredCapabilities getAndroidDesiredCapabilities(){
         DesiredCapabilities androidCaps = new DesiredCapabilities();
-        androidCaps.setCapability("deviceOrientation", "portrait");
+        //androidCaps.setCapability("deviceOrientation", "portrait");
         androidCaps.setCapability("platformName", "android");
         androidCaps.setCapability("deviceName", "and80");
         androidCaps.setCapability("platformVersion", "8.1.0");
-        androidCaps.setCapability("automationName", "Appium");
+        androidCaps.setCapability("automationName", "UiAutomator2");
         androidCaps.setCapability("appPackage", "org.wikipedia");
         androidCaps.setCapability("appActivity", ".main.MainActivity");
         androidCaps.setCapability("app", "/Users/user/Desktop/javaAppium/JavaAppium/src/main/resources/apks/org.wikipedia.apk");
@@ -70,6 +71,8 @@ public class Platform {
         iosCaps.setCapability("platformVersion", "14.3");
         iosCaps.setCapability("automationName", "XCUITest");
         iosCaps.setCapability("app", "/Users/user/Desktop/javaAppium/JavaAppium/src/main/resources/apks/Wikipedia.app");
+        iosCaps.setCapability("newCommandTimeout", "15");
+        iosCaps.setCapability("launchTimeout", "20000");
         return iosCaps;
     }
 
