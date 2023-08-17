@@ -30,7 +30,7 @@ public class Ex5Test extends CoreTestCase {
         saveCurrentArticle(FIRST_ARTICLE);
         saveCurrentArticle(SECOND_ARTICLE);
         searchPage.returnOnTheMainPage();
-        mainPage.getBottomPanel().clickSavedButton();
+        mainPage.get().getBottomPanel().clickSavedButton();
         savedPage.clickSavedGroup();
 
         List<WebElement> items = groupPage.getArticlesList();

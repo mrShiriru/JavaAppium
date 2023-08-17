@@ -10,7 +10,7 @@ public class ExamplesTest extends CoreTestCase {
 
     @Test
     public void testCheckSearchInput(){
-        mainPage.waitForFreeEncyclopedia();
+        mainPage.get().waitForFreeEncyclopedia();
         searchPage.clickSearchInput();
         searchPage.typeIntoSearchInput("Java");
         searchPage.waitForSearchResult("Object-oriented programming language");

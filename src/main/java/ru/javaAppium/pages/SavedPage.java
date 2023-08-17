@@ -3,11 +3,12 @@ package ru.javaAppium.pages;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.properties.Platform;
 
 
 public abstract class SavedPage extends AnyPage {
-    public SavedPage(AppiumDriver<WebElement> driver) {
+    public SavedPage(RemoteWebDriver driver) {
         super(driver);
     }
 
@@ -23,7 +24,7 @@ public abstract class SavedPage extends AnyPage {
 
     protected void checkSyncPopup(){
         if(!Platform.getInstance().isAndroid()) {
-            String locator1 = "xpath://XCUIElementTypeStaticText[@name='Sync your saved articles?']";
+            String locator1 = "xpath:=//XCUIElementTypeStaticText[@name='Sync your saved articles?']";
             By locator2 = By.xpath("//XCUIElementTypeButton[@name='Close']");
 
             if(waitElementVisibility(locator1,"").isDisplayed()){

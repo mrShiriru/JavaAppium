@@ -3,10 +3,11 @@ package ru.javaAppium.pages.android;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.SearchPage;
 
 public class AndroidSearchPage extends SearchPage {
-    public AndroidSearchPage(AppiumDriver<WebElement> driver) {
+    public AndroidSearchPage(RemoteWebDriver driver) {
         super(driver);
     }
 

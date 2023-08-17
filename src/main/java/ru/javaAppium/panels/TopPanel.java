@@ -2,13 +2,14 @@ package ru.javaAppium.panels;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.AnyPage;
 import org.openqa.selenium.By;
 import ru.javaAppium.properties.Platform;
 
 public abstract class TopPanel extends AnyPage {
 
-    public TopPanel(AppiumDriver<WebElement> driver) {
+    public TopPanel(RemoteWebDriver driver) {
         super(driver);
     }
 

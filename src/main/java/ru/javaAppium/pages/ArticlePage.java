@@ -3,6 +3,7 @@ package ru.javaAppium.pages;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.panels.BottomPanel;
 import ru.javaAppium.panels.BottomPanelFactory;
 import ru.javaAppium.panels.TopPanel;
@@ -21,7 +22,7 @@ public abstract class ArticlePage extends AnyPage {
             ARTICLE_TITLE;
     protected static String TITLE_TPL;
 
-    public ArticlePage(AppiumDriver<WebElement> driver) {
+    public ArticlePage(RemoteWebDriver driver) {
         super(driver);
         topPanel = TopPanelFactory.get(driver);
         bottomPanel = BottomPanelFactory.get(driver);

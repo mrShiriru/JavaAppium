@@ -2,10 +2,11 @@ package ru.javaAppium.pages.ios;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.MainPage;
 
 public class IOSMainPage extends MainPage {
-    public IOSMainPage(AppiumDriver<WebElement> driver) {
+    public IOSMainPage(RemoteWebDriver driver) {
         super(driver);
     }
 

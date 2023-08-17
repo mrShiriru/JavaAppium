@@ -3,11 +3,12 @@ package ru.javaAppium.panels.ios;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.panels.BottomPanel;
 
 public class IOSBottomPanel extends BottomPanel {
 
-    public IOSBottomPanel(AppiumDriver<WebElement> driver) {
+    public IOSBottomPanel(RemoteWebDriver driver) {
         super(driver);
     }
 

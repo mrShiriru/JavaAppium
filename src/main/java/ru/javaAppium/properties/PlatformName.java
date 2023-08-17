@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum PlatformName{
     PLATFORM_ANDROID("android"),
+    PLATFORM_MOBILE_WEB("mobile_web"),
     PLATFORM_IOS("ios");
 
     public String getPlatformName() {

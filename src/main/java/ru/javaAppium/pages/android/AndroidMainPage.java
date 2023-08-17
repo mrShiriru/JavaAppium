@@ -2,10 +2,11 @@ package ru.javaAppium.pages.android;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.MainPage;
 
 public class AndroidMainPage extends MainPage {
-    public AndroidMainPage(AppiumDriver<WebElement> driver) {
+    public AndroidMainPage(RemoteWebDriver driver) {
         super(driver);
     }
 

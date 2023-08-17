@@ -3,11 +3,12 @@ package ru.javaAppium.pages.ios;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.SearchPage;
 
 public class IOSSearchPage extends SearchPage {
 
-    public IOSSearchPage(AppiumDriver<WebElement> driver) {
+    public IOSSearchPage(RemoteWebDriver driver) {
         super(driver);
     }
 

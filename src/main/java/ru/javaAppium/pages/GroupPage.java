@@ -3,6 +3,7 @@ package ru.javaAppium.pages;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.interfaces.Article;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public abstract class GroupPage extends AnyPage implements Article {
             ARTICLE_LIST_TITLE,
             POPUP_INFO;
 
-    public GroupPage(AppiumDriver<WebElement> driver) {
+    public GroupPage(RemoteWebDriver driver) {
         super(driver);
     }
 

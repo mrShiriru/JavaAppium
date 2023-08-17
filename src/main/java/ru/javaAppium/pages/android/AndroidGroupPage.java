@@ -3,12 +3,13 @@ package ru.javaAppium.pages.android;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.GroupPage;
 
 import java.util.List;
 
 public class AndroidGroupPage extends GroupPage {
-    public AndroidGroupPage(AppiumDriver<WebElement> driver) {
+    public AndroidGroupPage(RemoteWebDriver driver) {
         super(driver);
     }
 

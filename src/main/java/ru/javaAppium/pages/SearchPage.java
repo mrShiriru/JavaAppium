@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.interfaces.Article;
 import ru.javaAppium.panels.TopPanel;
 import ru.javaAppium.panels.TopPanelFactory;
@@ -27,7 +28,7 @@ public abstract class SearchPage  extends AnyPage implements Article {
             SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_BY_TITLE_AND_DESCRIPTION_TPL;
 
-    public SearchPage(AppiumDriver<WebElement> driver) {
+    public SearchPage(RemoteWebDriver driver) {
         super(driver);
         topPanel = TopPanelFactory.get(driver);
     }

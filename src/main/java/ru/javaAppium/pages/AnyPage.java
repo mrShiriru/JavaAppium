@@ -4,9 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.javaAppium.properties.Platform;
@@ -16,13 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public abstract class AnyPage {
-    protected AppiumDriver<WebElement> driver;
+    protected RemoteWebDriver driver;
 
     public static final int FIRST_ARTICLE = 0;
     public static final int SECOND_ARTICLE = 1;
 
-    public AnyPage(AppiumDriver<WebElement> driver){
+    public AnyPage(RemoteWebDriver driver){
         this.driver= driver;
     }
 
@@ -108,12 +111,18 @@ public abstract class AnyPage {
         int yStart = (int) (size.getWidth() * 0.8);
         int yEnd = (int) (size.getWidth() * 0.2);
 
-        new TouchAction<>(driver)
-                .press(PointOption.point(x,yStart))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
-                .moveTo(PointOption.point(x, yEnd))
-                .release()
-                .perform();
+        if (driver instanceof AppiumDriver){
+            AppiumDriver driver = (AppiumDriver) this.driver;
+
+            new TouchAction<>(driver)
+                    .press(PointOption.point(x,yStart))
+                    .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
+                    .moveTo(PointOption.point(x, yEnd))
+                    .release()
+                    .perform();
+        } else {
+            log.info("swipeUP works only with Appium driver");
+        }
     }
 
     public void swipeElementToLeft(WebElement element) {
@@ -127,25 +136,32 @@ public abstract class AnyPage {
     public void swipeElementToLeftAndroid(WebElement element){
         Map<String, Integer> eCord = getCoordinates(element);
 
-        new TouchAction<>(driver)
-                .press(PointOption.point(eCord.get("right_x") - 10, eCord.get("middle_y")))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
-                .moveTo(PointOption.point(eCord.get("left_x") + 10, eCord.get("middle_y")))
-                .release()
-                .perform();
+        if (driver instanceof AppiumDriver) {
+            AppiumDriver driver = (AppiumDriver) this.driver;
+
+            new TouchAction<>(driver)
+                    .press(PointOption.point(eCord.get("right_x") - 10, eCord.get("middle_y")))
+                    .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
+                    .moveTo(PointOption.point(eCord.get("left_x") + 10, eCord.get("middle_y")))
+                    .release()
+                    .perform();
+        }
     }
 
     public void swipeElementToLeftIOS(WebElement element) {
         Map<String, Integer> eCord = getCoordinates(element);
 
-        new TouchAction<>(driver)
-                .press(PointOption.point(eCord.get("right_x") +1000, eCord.get("middle_y")))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
-                .moveTo(PointOption.point(eCord.get("left_x") +10, eCord.get("middle_y")))
-                .release()
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
-                .tap(PointOption.point(eCord.get("right_x"), eCord.get("middle_y")))
-                .perform();
+        if (driver instanceof AppiumDriver) {
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            new TouchAction<>(driver)
+                    .press(PointOption.point(eCord.get("right_x") + 1000, eCord.get("middle_y")))
+                    .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
+                    .moveTo(PointOption.point(eCord.get("left_x") + 10, eCord.get("middle_y")))
+                    .release()
+                    .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
+                    .tap(PointOption.point(eCord.get("right_x"), eCord.get("middle_y")))
+                    .perform();
+        }
     }
 
     private Map<String, Integer> getCoordinates(WebElement element){

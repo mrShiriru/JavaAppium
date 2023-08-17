@@ -3,10 +3,11 @@ package ru.javaAppium.pages.android;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.SavedPage;
 
 public class AndroidSavedPage extends SavedPage {
-    public AndroidSavedPage(AppiumDriver<WebElement> driver) {
+    public AndroidSavedPage(RemoteWebDriver driver) {
         super(driver);
     }
 

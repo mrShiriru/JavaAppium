@@ -3,12 +3,13 @@ package ru.javaAppium.pages.ios;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.GroupPage;
 
 import java.util.List;
 
 public class IOSGroupPage extends GroupPage {
-    public IOSGroupPage(AppiumDriver<WebElement> driver) {
+    public IOSGroupPage(RemoteWebDriver driver) {
         super(driver);
     }
 
