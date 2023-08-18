@@ -1,21 +1,28 @@
 package ru.javaAppium.pages.factories;
 
-import io.appium.java_client.AppiumDriver;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.MainPage;
 import ru.javaAppium.pages.android.AndroidMainPage;
 import ru.javaAppium.pages.ios.IOSMainPage;
+import ru.javaAppium.pages.mobileWeb.MWMainPage;
 import ru.javaAppium.properties.Platform;
+import ru.javaAppium.properties.PlatformName;
 
 public class MainPageFactory {
 
     public static MainPage get(RemoteWebDriver driver){
-        if (Platform.getInstance().isAndroid()){
-            return new AndroidMainPage(driver);
-        }else {
-            return new IOSMainPage(driver);
+
+        PlatformName platformName = Platform.getInstance().getEnumPlatformName();
+        switch (platformName) {
+            case PLATFORM_ANDROID:
+                return new AndroidMainPage(driver);
+            case PLATFORM_IOS:
+                return new IOSMainPage(driver);
+            case PLATFORM_MOBILE_WEB:
+                return new MWMainPage(driver);
+            default:
+                throw new IllegalArgumentException("Failed to select specific MainPage for" + platformName);
         }
     }
 }

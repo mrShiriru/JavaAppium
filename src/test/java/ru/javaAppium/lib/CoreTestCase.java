@@ -1,16 +1,17 @@
 package ru.javaAppium.lib;
 
-import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Marker;
 import ru.javaAppium.pages.factories.*;
 import ru.javaAppium.pages.*;
 import ru.javaAppium.properties.Platform;
+
+import static ru.javaAppium.properties.Property.getCustomProperty;
+import static ru.javaAppium.properties.Server.startAppiumServer;
+import static ru.javaAppium.properties.Server.stopAppiumServer;
 
 @Slf4j
 public class CoreTestCase {
@@ -28,10 +29,11 @@ public class CoreTestCase {
     @BeforeEach
     public void setUp() throws Exception
     {
+        //startAppiumServer();
         driver = Platform.getInstance().getDriver();
         openWikiPageForMobileWeb();
         this.loadingPages();
-        mainPage.get().skipOnboarding();
+        skipOnboarding();
     }
 
     private void loadingPages(){
@@ -42,12 +44,23 @@ public class CoreTestCase {
         savedPage = SavedPageFactory.get(driver);
         groupPage = GroupPageFactory.get(driver);
         mainPage.set(MainPageFactory.get(driver));
-        //mainPage = MainPageFactory.get(driver);
+    }
+
+    private void skipOnboarding(){
+        if(!Platform.getInstance().isMW()){
+            mainPage.get().skipOnboarding();
+        }else {
+            log.info("Method skipOnboarding() do nothing for platform "+ Platform.getInstance().getEnumPlatformName());
+        }
+
+
     }
 
     private void openWikiPageForMobileWeb(){
         if(Platform.getInstance().isMW()){
-            driver.get("https://en.m.wikipedia.org");
+            String url = getCustomProperty("mobileWebURL");
+            log.info("url: {}", url);
+            driver.get(url);
         }else {
             log.info("Method openWikiPageForMobileWeb() do nothing for platform "+ Platform.getInstance().getEnumPlatformName());
         }
@@ -56,6 +69,7 @@ public class CoreTestCase {
     @AfterEach
     public void tearDown(){
         driver.quit();
+        //stopAppiumServer();
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.javaAppium.androidTests;
+package ru.javaAppium.commonTests;
 
 import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Test;

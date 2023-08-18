@@ -1,4 +1,4 @@
-package ru.javaAppium.androidTests;
+package ru.javaAppium.commonTests;
 
 import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Assertions;
@@ -22,18 +22,10 @@ public class Ex2Test extends CoreTestCase {
      */
     @Test
     public void testEx2_CreateMethod (){
-        By searchLocator = By.xpath("//*[@resource-id='org.wikipedia:id/search_container']//android.widget.TextView");
-        assertElementHasText(
-                searchLocator,
-                "Search Wikipedia",
-                "Expected text not found");
+
+        String actualText = searchPage.getSearchInputText();
+        Assertions.assertEquals("Search Wikipedia", actualText, "Expected text not found");
     }
 
-    private void assertElementHasText(By locator, String expectedText, String errorMessage){
-        WebElement element = mainPage.get().waitElementPresent(locator,ERROR_MESSAGE,15);
-        String actualText = element.getAttribute("text");
-
-        Assertions.assertEquals(errorMessage, expectedText, actualText);
-    }
 
 }

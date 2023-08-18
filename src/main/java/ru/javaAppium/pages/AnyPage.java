@@ -59,7 +59,6 @@ public abstract class AnyPage {
         element.click();
     }
 
-    //
 
     public void waitAndClick(String locator, String errorMsg, long timeoutInSeconds){
         WebElement element = waitElementPresent(locator, errorMsg, timeoutInSeconds);
@@ -78,6 +77,19 @@ public abstract class AnyPage {
         return new WebDriverWait(driver, 5)
                 .withMessage(errorMessage)
                 .until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    public String getElementText(By locator, String errorMessage){
+        WebElement element = waitElementPresent(locator,errorMessage,10);
+        if (Platform.getInstance().isAndroid() || Platform.getInstance().isMW()){
+            return element.getAttribute("text");
+        }else {
+            return element.getAttribute("name");
+        }
+    }
+
+    public static String replaceFirstPathFromNode(String value, String target, String replacement){
+        return value.replaceFirst(target, replacement);
     }
 
     private By getLocatorByString(String locatorWithBy){

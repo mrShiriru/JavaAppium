@@ -1,6 +1,6 @@
 package ru.javaAppium.pages;
 
-import io.appium.java_client.AppiumDriver;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
@@ -13,13 +13,14 @@ import ru.javaAppium.properties.Platform;
 import java.util.List;
 import java.util.Objects;
 
-
+@Slf4j
 public abstract class SearchPage  extends AnyPage implements Article {
 
     TopPanel topPanel;
 
     protected static By
             SEARCH_INPUT_ELEMENT,
+            SEARCH_INPUT,
             SEARCH_CLEAR_TEXT_BUTTON,
             ARTICLES_IN_SEARCH_LIST,
             PAGE_LIST_ITEM_TITLE;
@@ -42,11 +43,21 @@ public abstract class SearchPage  extends AnyPage implements Article {
 
     }
 
+    public String getSearchInputText(){
+        By locator = getSearchInputLocator();
+        log.info("locator: {}", locator);
+        return getElementText(locator, "Error getElementText");
+    }
+
+    protected By getSearchInputLocator(){
+        return SEARCH_INPUT_ELEMENT;
+    }
+
     protected void clickCancelButton(){}
 
     /* TEMPLATES METHODS */
     private static By getXpathResultSearchArticle(String description){
-        return By.xpath("//"+SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{DESCRIPTION}", description));
+        return By.xpath(SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{DESCRIPTION}", description));
     }
 
     private static By getXpathResultSearchArticle(String title, String description){
@@ -61,7 +72,7 @@ public abstract class SearchPage  extends AnyPage implements Article {
     }
 
     public void typeIntoSearchInput(String text){
-        waitAndSendKeys(SEARCH_INPUT_ELEMENT, text, "Cannot find and type into search input", 5);
+        waitAndSendKeys(SEARCH_INPUT, text, "Cannot find and type into search input", 5);
     }
 
     public void waitForSearchResult(String description){
@@ -111,11 +122,12 @@ public abstract class SearchPage  extends AnyPage implements Article {
     public void checkTextInEachSearchResult(String text){
         List<WebElement> articles =  findElements(ARTICLES_IN_SEARCH_LIST);
 
+        System.out.println("size = "+ articles.size());
         for (WebElement article : articles){
             String actualTitle = getTitle(article);
-
-            if (!actualTitle.contains(text)){
-                throw new NotFoundException("ext is not contains in search title");
+            System.out.println("actualTitle = "+ actualTitle);
+            if (!actualTitle.toLowerCase().contains(text.toLowerCase())){
+                throw new NotFoundException("text is not contains in search title");
             }
         }
     }
