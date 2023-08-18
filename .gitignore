@@ -2,7 +2,11 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# My ignore
 /src/test/resources/credential.properties
+/.allure/
+/allure-results/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
