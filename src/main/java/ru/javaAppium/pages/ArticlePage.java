@@ -1,13 +1,12 @@
 package ru.javaAppium.pages;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.panels.BottomPanel;
-import ru.javaAppium.panels.BottomPanelFactory;
+import ru.javaAppium.pages.factories.BottomPanelFactory;
 import ru.javaAppium.panels.TopPanel;
-import ru.javaAppium.panels.TopPanelFactory;
+import ru.javaAppium.pages.factories.TopPanelFactory;
 
 import java.util.List;
 
@@ -19,6 +18,8 @@ public abstract class ArticlePage extends AnyPage {
 
     protected static By
             FRAGMENT_PAGE_COORDINATOR,
+            STAR_LOCATOR_CLICKED,
+
             ARTICLE_TITLE;
     protected static String TITLE_TPL;
 
@@ -48,6 +49,12 @@ public abstract class ArticlePage extends AnyPage {
         );
     }
 
+    public void saveCurrentArticle(String  title){
+        checkTitlePresentInArticle(title);
+        saveArticleInSavedList();
+    }
+
+
     public void checkTitlePresentInArticle(String titleName){
         waitElementPresent(getArticleTitleLocator(titleName),
                 String.format("Cannot find title '%s' in the current article", titleName),
@@ -58,7 +65,7 @@ public abstract class ArticlePage extends AnyPage {
     protected void checkPopupHelper(){
         By locator = By.xpath("//*[contains(@name, 'Tap to go back')]");
 
-        if (driver.findElements(locator).size() >0){
+        if (isElementPresent(locator)){
             waitElementNotPresent(locator,"Popup 'Tap to go back' still present on the page",15);
         }
     }
@@ -90,4 +97,7 @@ public abstract class ArticlePage extends AnyPage {
     }
 
 
+    public boolean isStarButtonClicked(){
+        return isElementPresent(STAR_LOCATOR_CLICKED);
+    };
 }

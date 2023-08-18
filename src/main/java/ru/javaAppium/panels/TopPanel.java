@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.pages.AnyPage;
 import org.openqa.selenium.By;
+import ru.javaAppium.pages.SearchPage;
 import ru.javaAppium.properties.Platform;
 
 public abstract class TopPanel extends AnyPage {
@@ -23,6 +24,4 @@ public abstract class TopPanel extends AnyPage {
                 5
         );
     }
-
-
 }

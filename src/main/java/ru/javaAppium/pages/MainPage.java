@@ -1,18 +1,18 @@
 package ru.javaAppium.pages;
 
-import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.panels.BottomPanel;
-import ru.javaAppium.panels.BottomPanelFactory;
+import ru.javaAppium.pages.factories.BottomPanelFactory;
 
 
 public abstract class MainPage extends AnyPage {
 
     BottomPanel bottomPanel;
 
-    protected static String
+    protected static By
             SKIP_BUTTON,
+            MAIN_MENU,
             FREE_ENC;
 
     public MainPage(RemoteWebDriver driver) {
@@ -26,6 +26,15 @@ public abstract class MainPage extends AnyPage {
 
     public void waitForFreeEncyclopedia(){
         waitElementVisibility(FREE_ENC,"cannot find element 'The free encyclopedia'");
+    }
+
+    public void clickMainMenu(){
+        tryClick(MAIN_MENU,"ERROR", 3);
+    }
+
+    public void clickWatchList(){
+        By locator = By.xpath("//a[@data-event-name='menu.watchlist']");
+        tryClick(locator, "ERROR", 3);
     }
 
     public void skipOnboarding(){

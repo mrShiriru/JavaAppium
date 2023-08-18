@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.javaAppium.interfaces.Article;
 import ru.javaAppium.panels.TopPanel;
-import ru.javaAppium.panels.TopPanelFactory;
+import ru.javaAppium.pages.factories.TopPanelFactory;
 import ru.javaAppium.properties.Platform;
 
 import java.util.List;
@@ -34,13 +34,19 @@ public abstract class SearchPage  extends AnyPage implements Article {
         topPanel = TopPanelFactory.get(driver);
     }
 
+    public void typeToSearch(String searchValue){
+        clickSearchInput();
+        typeIntoSearchInput(searchValue);
+    }
+
     public void returnOnTheMainPage(){
         if(Platform.getInstance().isAndroid()){
             topPanel.clickNavigateUpButton();
-        }else{
+        }else if(Platform.getInstance().isIOS()){
             clickCancelButton();
+        }else {
+            waitAndClickSearchCloseButton();
         }
-
     }
 
     public String getSearchInputText(){

@@ -5,11 +5,10 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.javaAppium.properties.Platform;
 
@@ -21,12 +20,18 @@ import java.util.Map;
 @Slf4j
 public abstract class AnyPage {
     protected RemoteWebDriver driver;
+    protected FluentWait<RemoteWebDriver> wait;
 
     public static final int FIRST_ARTICLE = 0;
     public static final int SECOND_ARTICLE = 1;
 
     public AnyPage(RemoteWebDriver driver){
-        this.driver= driver;
+        this.driver = driver;
+
+        wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(WebDriverException.class);
     }
 
 
@@ -54,29 +59,48 @@ public abstract class AnyPage {
                 .until(ExpectedConditions.invisibilityOfAllElements(elements));
     }
 
+    public boolean isElementPresent(By locator){
+        return driver.findElements(locator).size() > 0;
+    }
+
     public void waitAndClick(By locator, String errorMsg, long timeoutInSeconds){
         WebElement element = waitElementPresent(locator, errorMsg, timeoutInSeconds);
         element.click();
     }
 
-
-    public void waitAndClick(String locator, String errorMsg, long timeoutInSeconds){
-        WebElement element = waitElementPresent(locator, errorMsg, timeoutInSeconds);
-        element.click();
+    public void tryClick(By locator,String errorMsg, long amountOfAttemps){
+        try {
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            element.click();
+        }catch (ElementClickInterceptedException ex){
+            if (amountOfAttemps > 0)
+            {
+                amountOfAttemps--;
+                waitElementReload(1000);
+                tryClick(locator,errorMsg, amountOfAttemps);
+            } else {
+                throw new ElementClickInterceptedException(errorMsg + ex.getMessage());
+            }
+        }
     }
 
-    public WebElement waitElementPresent(String locator, String errorMsg, long timeoutInSeconds){
-        By by = getLocatorByString(locator);
-        return new WebDriverWait(driver, timeoutInSeconds)
-                .withMessage(errorMsg + "\n")
-                .until(ExpectedConditions.presenceOfElementLocated(by));
+    protected void waitElementReload(int ms){
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e){
+            System.out.println("Interrupted!");
+            Thread.currentThread().interrupt();
+        }
     }
 
-    protected WebElement waitElementVisibility(String locator, String errorMessage) {
-        By by = getLocatorByString(locator);
+    protected void loadingPage(){
+        waitElementReload(2000);
+    }
+
+    protected WebElement waitElementVisibility(By locator, String errorMessage) {
         return new WebDriverWait(driver, 5)
                 .withMessage(errorMessage)
-                .until(ExpectedConditions.visibilityOfElementLocated(by));
+                .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public String getElementText(By locator, String errorMessage){
@@ -106,7 +130,6 @@ public abstract class AnyPage {
         }
     }
 
-    //
 
     public void waitAndSendKeys(By by, String value, String errorMsg, long timeoutInSeconds){
         WebElement element = waitElementPresent(by, errorMsg, timeoutInSeconds);

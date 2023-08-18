@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Properties;
 
 @Slf4j
 public class Property {
@@ -15,29 +16,30 @@ public class Property {
         String propertyValue  = System.getProperty(propertyName);
         log.debug("Getting value from jenkins: value {} = {}",propertyName, propertyValue);
         if ( StringUtils.isEmpty(propertyValue)) {
-            propertyValue = getConfigPropertyVariable(propertyName);
+            propertyValue = findVariableInConfig(propertyName);
         }
 
         return propertyValue;
     }
 
+    public static String findVariableInConfig(String propertyName){
+        String configPath = "config.properties";
+        return getConfigPropertyVariable(configPath, propertyName);
+    }
 
-    public static String getConfigPropertyVariable(String variableName) {
+    public static String findVariableInCredential(String propertyName){
+        String configPath = "credential.properties";
+        return getConfigPropertyVariable(configPath, propertyName);
 
+    }
+
+    private static String getConfigPropertyVariable(String configName, String variableName) {
         String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
-        String appConfigPath = rootPath + "config.properties";
-        log.debug("appConfigPath = {}", appConfigPath);
-
-        java.util.Properties configProperty = new java.util.Properties();
+        String configPath = rootPath + configName;
         String variableValue = null;
 
-        try {
-            configProperty.load(new FileInputStream(appConfigPath));
-            variableValue = configProperty.getProperty(variableName);
-
-        } catch (IOException e) {
-            log.error("ERROR: 'config.properties' file is not found!", e);
-        }
+        Properties configProperty = loadProperty(configPath);
+        variableValue = configProperty.getProperty(variableName);
 
         if (variableValue == null){
             throw new IllegalArgumentException(
@@ -47,4 +49,15 @@ public class Property {
         return variableValue;
     }
 
+    private static Properties loadProperty(String path){
+        try {
+            Properties prop = new Properties();
+            prop.load(new FileInputStream(path));
+            return prop;
+        } catch (IOException ex) {
+            log.error("ERROR: '.properties' file is not found!", ex);
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

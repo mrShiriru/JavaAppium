@@ -21,17 +21,16 @@ public class Ex5Test extends CoreTestCase {
      * 3. Убеждается, что вторая осталась
      * 4. Переходит в неё и убеждается, что title совпадает
      */
+    String searchValue = "Appium";
+
     @Test
     public void testEx5_testCreateTwoArticle() {
-        String searchValue = "Appium";
 
-        searchPage.clickSearchInput();
-        searchPage.typeIntoSearchInput(searchValue);
+        searchPage.typeToSearch(searchValue);
         saveCurrentArticle(FIRST_ARTICLE);
         saveCurrentArticle(SECOND_ARTICLE);
         searchPage.returnOnTheMainPage();
-        mainPage.get().getBottomPanel().clickSavedButton();
-        savedPage.clickSavedGroup();
+        openGroupWithSavedArticles();
 
         List<WebElement> items = groupPage.getArticlesList();
         groupPage.deleteArticle(FIRST_ARTICLE);
@@ -40,8 +39,21 @@ public class Ex5Test extends CoreTestCase {
 
         if(Platform.getInstance().isAndroid()){
             verifyTitleOfArticle();
-        } else {
+        } else  if(Platform.getInstance().isIOS()){
             verifyDescriptionOfArticle();
+        } else {
+            verifyClickedStarButtonOfArticle();
+        }
+    }
+
+    private void openGroupWithSavedArticles(){
+        if(Platform.getInstance().isMW()){
+            mainPage.get().clickMainMenu();
+            mainPage.get().clickWatchList();
+
+        }else {
+            mainPage.get().getBottomPanel().clickSavedButton();
+            savedPage.clickSavedGroup();
         }
     }
 
@@ -57,10 +69,24 @@ public class Ex5Test extends CoreTestCase {
         Assertions.assertEquals(expectedTitle,actualTitle, ERROR_MESSAGE);
     }
 
+    private void verifyClickedStarButtonOfArticle(){
+        groupPage.saveTitleAndOpenArticle(FIRST_ARTICLE);
+        Assertions.assertTrue(articlePage.isStarButtonClicked(),"Button star hasn't been clicked");
+    }
+
     private void saveCurrentArticle(int articleNumber){
         String title = searchPage.saveTitleAndOpenArticle(articleNumber);
-        articlePage.checkTitlePresentInArticle(title);
-        articlePage.saveArticleInSavedList();
-        articlePage.getTopPanel().clickNavigateUpButton();
+        articlePage.saveCurrentArticle(title);
+        clickGoBack();
     }
+
+    private void clickGoBack(){
+        if(Platform.getInstance().isMW()){
+            searchPage.typeToSearch(searchValue);
+        }else {
+            articlePage.getTopPanel().clickNavigateUpButton();
+        }
+    }
+
+
 }

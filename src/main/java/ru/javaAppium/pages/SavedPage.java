@@ -24,7 +24,7 @@ public abstract class SavedPage extends AnyPage {
 
     protected void checkSyncPopup(){
         if(!Platform.getInstance().isAndroid()) {
-            String locator1 = "xpath:=//XCUIElementTypeStaticText[@name='Sync your saved articles?']";
+            By locator1 = By.xpath("//XCUIElementTypeStaticText[@name='Sync your saved articles?']");
             By locator2 = By.xpath("//XCUIElementTypeButton[@name='Close']");
 
             if(waitElementVisibility(locator1,"").isDisplayed()){

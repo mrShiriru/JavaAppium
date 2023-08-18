@@ -28,6 +28,7 @@ public abstract class GroupPage extends AnyPage implements Article {
 
     public void deleteArticle(int ArticleNumber) {
         List<WebElement> articleList = getArticlesList();
+
         swipeElementToLeft(articleList.get(ArticleNumber));
 
 //        waitElementsPresent(

@@ -1,8 +1,9 @@
-package ru.javaAppium.panels;
+package ru.javaAppium.pages.factories;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import ru.javaAppium.panels.TopPanel;
 import ru.javaAppium.panels.android.AndroidTopPanel;
 import ru.javaAppium.panels.ios.IOSTopPanel;
 import ru.javaAppium.properties.Platform;

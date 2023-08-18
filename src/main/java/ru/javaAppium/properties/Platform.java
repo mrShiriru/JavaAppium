@@ -11,8 +11,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.javaAppium.properties.PlatformName.PLATFORM_ANDROID;
-import static ru.javaAppium.properties.PlatformName.PLATFORM_MOBILE_WEB;
+import static ru.javaAppium.properties.PlatformName.*;
 import static ru.javaAppium.properties.Property.getCustomProperty;
 
 public class Platform {
@@ -30,6 +29,10 @@ public class Platform {
 
     public boolean isAndroid(){
         return PLATFORM_ANDROID.equals(getEnumPlatformName());
+    }
+
+    public boolean isIOS(){
+        return PLATFORM_IOS.equals(getEnumPlatformName());
     }
 
     public boolean isMW(){
@@ -73,7 +76,7 @@ public class Platform {
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-        chromeOptions.addArguments("window-size=360,640");
+        chromeOptions.addArguments("window-size=360,840");
 
         return chromeOptions;
     }
