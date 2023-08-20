@@ -1,5 +1,6 @@
 package ru.javaAppium.pages;
 
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
@@ -34,6 +35,7 @@ public abstract class SearchPage  extends AnyPage implements Article {
         topPanel = TopPanelFactory.get(driver);
     }
 
+    @Step("typeToSearch")
     public void typeToSearch(String searchValue){
         clickSearchInput();
         typeIntoSearchInput(searchValue);

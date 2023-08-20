@@ -1,5 +1,6 @@
 package ru.javaAppium.lib;
 
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ public class CoreTestCase {
     public GroupPage groupPage;
 
     @BeforeEach
+    @Step("run driver and loading pages")
     public void setUp() throws Exception
     {
         //startAppiumServer();
@@ -67,6 +69,7 @@ public class CoreTestCase {
     }
 
     @AfterEach
+    @Step("Quit driver")
     public void tearDown(){
         driver.quit();
         //stopAppiumServer();

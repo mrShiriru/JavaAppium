@@ -1,6 +1,7 @@
 package ru.javaAppium.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
@@ -36,25 +37,25 @@ public abstract class AnyPage {
 
 
     public WebElement waitElementPresent(By locator, String errorMsg, long timeoutInSeconds){
-        return new WebDriverWait(driver, timeoutInSeconds)
+        return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
                 .withMessage(errorMsg + "\n")
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     public List<WebElement> waitElementsPresent(By locator, String errorMsg, long timeoutInSeconds){
-        return new WebDriverWait(driver, timeoutInSeconds)
+        return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
                 .withMessage(errorMsg + "\n")
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
     public void waitElementNotPresent(By locator, String errorMsg, long timeoutInSeconds){
-        new WebDriverWait(driver, timeoutInSeconds)
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
                 .withMessage(errorMsg + "\n")
                 .until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
     public void waitElementsNotPresent(List<WebElement> elements, String errorMsg, long timeoutInSeconds){
-        new WebDriverWait(driver, timeoutInSeconds)
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
                 .withMessage(errorMsg + "\n")
                 .until(ExpectedConditions.invisibilityOfAllElements(elements));
     }
@@ -98,7 +99,7 @@ public abstract class AnyPage {
     }
 
     protected WebElement waitElementVisibility(By locator, String errorMessage) {
-        return new WebDriverWait(driver, 5)
+        return new WebDriverWait(driver, Duration.ofSeconds(5))
                 .withMessage(errorMessage)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -149,7 +150,7 @@ public abstract class AnyPage {
         if (driver instanceof AppiumDriver){
             AppiumDriver driver = (AppiumDriver) this.driver;
 
-            new TouchAction<>(driver)
+            new TouchAction<>((PerformsTouchActions) driver)
                     .press(PointOption.point(x,yStart))
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
                     .moveTo(PointOption.point(x, yEnd))
@@ -174,7 +175,7 @@ public abstract class AnyPage {
         if (driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
 
-            new TouchAction<>(driver)
+            new TouchAction<>((PerformsTouchActions) driver)
                     .press(PointOption.point(eCord.get("right_x") - 10, eCord.get("middle_y")))
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
                     .moveTo(PointOption.point(eCord.get("left_x") + 10, eCord.get("middle_y")))
@@ -188,7 +189,7 @@ public abstract class AnyPage {
 
         if (driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
-            new TouchAction<>(driver)
+            new TouchAction<>((PerformsTouchActions) driver)
                     .press(PointOption.point(eCord.get("right_x") + 1000, eCord.get("middle_y")))
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
                     .moveTo(PointOption.point(eCord.get("left_x") + 10, eCord.get("middle_y")))

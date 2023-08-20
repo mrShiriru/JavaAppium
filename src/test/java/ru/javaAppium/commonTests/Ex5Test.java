@@ -1,5 +1,7 @@
 package ru.javaAppium.commonTests;
 
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import ru.javaAppium.lib.CoreTestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,10 @@ public class Ex5Test extends CoreTestCase {
     String searchValue = "Appium";
 
     @Test
+    @Features(value = {@Feature("Article"), @Feature("SavedGroup"), @Feature("Search")})
+    @DisplayName("Delete article success test")
+    @Description("Add two saved title, delete one")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testEx5_testCreateTwoArticle() {
 
         searchPage.typeToSearch(searchValue);
@@ -46,6 +52,7 @@ public class Ex5Test extends CoreTestCase {
         }
     }
 
+    @Step("openGroupWithSavedArticles")
     private void openGroupWithSavedArticles(){
         if(Platform.getInstance().isMW()){
             mainPage.get().clickMainMenu();
@@ -57,12 +64,14 @@ public class Ex5Test extends CoreTestCase {
         }
     }
 
+    @Step("verifyDescriptionOfArticle")
     private void verifyDescriptionOfArticle() {
         String expectedDescription = groupPage.saveDescriptionAndOpenArticle(FIRST_ARTICLE);
         String actualDescription = articlePage.getDescription();
         Assertions.assertEquals(expectedDescription,actualDescription,ERROR_MESSAGE);
     }
 
+    @Step("verifyTitleOfArticle")
     private void verifyTitleOfArticle() {
         String expectedTitle = groupPage.saveTitleAndOpenArticle(FIRST_ARTICLE);
         String actualTitle = articlePage.getTitle();
@@ -74,6 +83,7 @@ public class Ex5Test extends CoreTestCase {
         Assertions.assertTrue(articlePage.isStarButtonClicked(),"Button star hasn't been clicked");
     }
 
+    @Step("saveCurrentArticle")
     private void saveCurrentArticle(int articleNumber){
         String title = searchPage.saveTitleAndOpenArticle(articleNumber);
         articlePage.saveCurrentArticle(title);

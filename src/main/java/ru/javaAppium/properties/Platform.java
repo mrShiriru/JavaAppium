@@ -44,9 +44,9 @@ public class Platform {
 
         switch (platformName) {
             case PLATFORM_ANDROID:
-                return new AndroidDriver<>(new URL(getPlatformURL()), getAndroidDesiredCapabilities());
+                return new AndroidDriver(new URL(getPlatformURL()), getAndroidDesiredCapabilities());
             case PLATFORM_IOS:
-                return new IOSDriver<>(new URL(getPlatformURL()), getIOSDesiredCapabilities());
+                return new IOSDriver(new URL(getPlatformURL()), getIOSDesiredCapabilities());
             case PLATFORM_MOBILE_WEB:
                 System.setProperty("webdriver.chrome.driver", getCustomProperty("chromeDriverPath"));
                 return new ChromeDriver(getMWChromeOptions());
